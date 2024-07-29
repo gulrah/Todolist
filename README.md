@@ -22,7 +22,7 @@ Todour is a professional and modern to-do list application designed to help you 
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/todour.git
+    git clone https://github.com/gulrah/todour.git
     cd todour
     ```
 
@@ -60,6 +60,6 @@ This project is licensed under the MIT License.
 
 ---
 
-**Author**: Gülnar Rəhimli
+**Author**: Gulnar Rahimli
 
 **Email**: [glnrrahimli@gmail.com](mailto:glnrrahimli@gmail.com)
