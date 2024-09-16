@@ -23,7 +23,7 @@ const AddTaskForm = ({ addTask }) => {
         />
         <div className="input-group-append">
           <button type="submit" className="btn btn-primary btn-custom">
-            Add Task
+            <i className="fas fa-plus"></i> Add Task
           </button>
         </div>
       </div>

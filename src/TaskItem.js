@@ -4,22 +4,27 @@ const TaskItem = ({ task, toggleComplete, deleteTask, editTask }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(task.text);
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
+  const handleEdit = () => setIsEditing(true);
   const handleSave = () => {
     editTask(task.id, newText);
     setIsEditing(false);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSave();
+    }
+  };
+
   return (
-    <li className="task-item">
+    <li className="list-group-item task-item d-flex justify-content-between align-items-center">
       {isEditing ? (
         <input
           type="text"
+          className="form-control"
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
       ) : (
         <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
@@ -27,16 +32,22 @@ const TaskItem = ({ task, toggleComplete, deleteTask, editTask }) => {
         </span>
       )}
 
-      <div>
+      <div className="button-group">
         {isEditing ? (
-          <button onClick={handleSave}>Save</button>
+          <button className="btn btn-sm btn-success btn-custom" onClick={handleSave}>
+            Save
+          </button>
         ) : (
           <>
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={() => toggleComplete(task.id)}>
+            <button className="btn btn-sm btn-primary btn-custom" onClick={handleEdit}>
+              Edit
+            </button>
+            <button className="btn btn-sm btn-success btn-custom" onClick={() => toggleComplete(task.id)}>
               {task.completed ? 'Undo' : 'Complete'}
             </button>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+            <button className="btn btn-sm btn-danger btn-custom" onClick={() => deleteTask(task.id)}>
+              Delete
+            </button>
           </>
         )}
       </div>

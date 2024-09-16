@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
-import './styles.css';  // Ensure you import your styles
+import './styles.css'; // Make sure styles are imported
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-  const [darkMode, setDarkMode] = useState(false); // State for Dark Mode
+  const [darkMode, setDarkMode] = useState(false);
 
   // Load tasks from local storage when the app loads
   useEffect(() => {
@@ -16,7 +16,7 @@ const App = () => {
     }
   }, []);
 
-  // Save tasks to local storage whenever the tasks state changes
+  // Save tasks to local storage whenever tasks change
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
@@ -46,20 +46,22 @@ const App = () => {
     );
   };
 
-  const toggleDarkMode = () => setDarkMode(!darkMode); // Toggle Dark Mode
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
     <div className={`container app ${darkMode ? 'dark-mode' : ''}`}>
-      {/* Dark Mode Toggle Button */}
-      <div className="dark-mode-toggle">
-        <button onClick={toggleDarkMode} className="btn btn-secondary">
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
-      </div>
-      
-      {/* Main To-Do List Components */}
+      {/* Dark Mode Toggle */}
+      <button onClick={toggleDarkMode} className="btn btn-secondary btn-custom">
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
+
+      {/* Header */}
       <Header />
+
+      {/* Add Task Form */}
       <AddTaskForm addTask={addTask} />
+
+      {/* Task List */}
       <TaskList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} editTask={editTask} />
     </div>
   );
