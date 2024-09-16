@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
+import './styles.css';  // Ensure you import your styles
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
