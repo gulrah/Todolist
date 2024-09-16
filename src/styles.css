@@ -67,6 +67,7 @@ p, input, button {
 
 .dark-mode .task-item {
   background-color: #2e2e2e;
+  color: #f5f5f5;
 }
 
 .dark-mode .btn-custom {
