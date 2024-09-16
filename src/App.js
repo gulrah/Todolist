@@ -1,14 +1,23 @@
-// src/App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
 
 const App = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Build a To-Do List App', completed: false },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  // Load tasks from local storage when the app loads
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks) {
+      setTasks(storedTasks);
+    }
+  }, []);
+
+  // Save tasks to local storage whenever the tasks state changes
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (text) => {
     const newTask = { id: Date.now(), text, completed: false };
