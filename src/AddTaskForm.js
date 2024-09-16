@@ -1,5 +1,5 @@
-// src/AddTaskForm.js
 import React, { useState } from 'react';
+import { Form, Button, InputGroup } from 'react-bootstrap';
 
 const AddTaskForm = ({ addTask }) => {
   const [task, setTask] = useState('');
@@ -13,20 +13,22 @@ const AddTaskForm = ({ addTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div className="input-group">
-        <input
+    <Form onSubmit={handleSubmit} className="mb-4">
+      <InputGroup>
+        <Form.Control
           type="text"
-          className="form-control"
           placeholder="Add new task"
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          className="shadow-sm"
         />
-        <div className="input-group-append">
-          <button type="submit" className="btn btn-primary btn-custom"><i className="fas fa-plus"></i> Add Task</button>
-        </div>
-      </div>
-    </form>
+        <InputGroup.Append>
+          <Button variant="primary" type="submit" className="btn-custom">
+            <i className="fas fa-plus"></i> Add Task
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
+    </Form>
   );
 };
 

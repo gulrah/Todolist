@@ -5,6 +5,7 @@ import AddTaskForm from './AddTaskForm';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [darkMode, setDarkMode] = useState(false); // State for Dark Mode
 
   // Load tasks from local storage when the app loads
   useEffect(() => {
@@ -44,8 +45,18 @@ const App = () => {
     );
   };
 
+  const toggleDarkMode = () => setDarkMode(!darkMode); // Toggle Dark Mode
+
   return (
-    <div className="container">
+    <div className={`container app ${darkMode ? 'dark-mode' : ''}`}>
+      {/* Dark Mode Toggle Button */}
+      <div className="dark-mode-toggle">
+        <button onClick={toggleDarkMode} className="btn btn-secondary">
+          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        </button>
+      </div>
+      
+      {/* Main To-Do List Components */}
       <Header />
       <AddTaskForm addTask={addTask} />
       <TaskList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} editTask={editTask} />
