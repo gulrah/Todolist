@@ -1,70 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import TaskList from './TaskList';
-import AddTaskForm from './AddTaskForm';
-import './styles.css'; // Make sure styles are imported
+import React, { useState } from 'react';
 
-const App = () => {
-  const [tasks, setTasks] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+const TaskItem = ({ task, toggleComplete, deleteTask, editTask }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newText, setNewText] = useState(task.text);
+  const [editError, setEditError] = useState('');
 
-  // Load tasks from local storage when the app loads
-  useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (storedTasks) {
-      setTasks(storedTasks);
+  const handleEdit = () => setIsEditing(true);
+
+  const handleSave = () => {
+    if (newText.trim() === "") {
+      setEditError("Task cannot be empty");
+      return;
     }
-  }, []);
-
-  // Save tasks to local storage whenever tasks change
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
-
-  const addTask = (text) => {
-    const newTask = { id: Date.now(), text, completed: false };
-    setTasks([...tasks, newTask]);
+    editTask(task.id, newText);
+    setIsEditing(false);
+    setEditError('');
   };
 
-  const toggleComplete = (id) => {
-    setTasks(
-      tasks.map(task =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSave();
+    }
   };
-
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
-  };
-
-  const editTask = (id, newText) => {
-    setTasks(
-      tasks.map(task =>
-        task.id === id ? { ...task, text: newText } : task
-      )
-    );
-  };
-
-  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
-    <div className={`container app ${darkMode ? 'dark-mode' : ''}`}>
-      {/* Dark Mode Toggle */}
-      <button onClick={toggleDarkMode} className="btn btn-secondary btn-custom">
-        {darkMode ? 'Light Mode' : 'Dark Mode'}
-      </button>
+    <li className="list-group-item d-flex justify-content-between align-items-center py-3 task-item">
+      {isEditing ? (
+        <input
+          type="text"
+          className="form-control"
+          value={newText}
+          onChange={(e) => setNewText(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+      ) : (
+        <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+          {task.text}
+        </span>
+      )}
 
-      {/* Header */}
-      <Header />
-
-      {/* Add Task Form */}
-      <AddTaskForm addTask={addTask} />
-
-      {/* Task List */}
-      <TaskList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} editTask={editTask} />
-    </div>
+      <div className="btn-group">
+        {isEditing ? (
+          <button className="btn btn-success btn-sm" onClick={handleSave}>
+            Save
+          </button>
+        ) : (
+          <>
+            <button className="btn btn-primary btn-sm" onClick={handleEdit}>
+              Edit
+            </button>
+            <button className="btn btn-success btn-sm" onClick={() => toggleComplete(task.id)}>
+              {task.completed ? 'Undo' : 'Complete'}
+            </button>
+            <button className="btn btn-danger btn-sm" onClick={() => deleteTask(task.id)}>
+              Delete
+            </button>
+          </>
+        )}
+      </div>
+      {editError && <p className="error-text mt-2">{editError}</p>}
+    </li>
   );
 };
 
-export default App;
+export default TaskItem;

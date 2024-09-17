@@ -2,8 +2,8 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="header">
-      <h1><i className="fas fa-tasks"></i> Task Manager</h1>
+    <header className="text-center py-4">
+      <h1 className="display-4 text-primary"><i className="fas fa-tasks"></i> Task Manager</h1>
     </header>
   );
 };

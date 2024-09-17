@@ -17,7 +17,7 @@ const TaskItem = ({ task, toggleComplete, deleteTask, editTask }) => {
   };
 
   return (
-    <li className="list-group-item task-item d-flex justify-content-between align-items-center">
+    <li className="list-group-item d-flex justify-content-between align-items-center">
       {isEditing ? (
         <input
           type="text"
@@ -32,20 +32,20 @@ const TaskItem = ({ task, toggleComplete, deleteTask, editTask }) => {
         </span>
       )}
 
-      <div className="button-group">
+      <div className="btn-group">
         {isEditing ? (
-          <button className="btn btn-sm btn-success btn-custom" onClick={handleSave}>
+          <button className="btn btn-success btn-sm" onClick={handleSave}>
             Save
           </button>
         ) : (
           <>
-            <button className="btn btn-sm btn-primary btn-custom" onClick={handleEdit}>
+            <button className="btn btn-primary btn-sm" onClick={handleEdit}>
               Edit
             </button>
-            <button className="btn btn-sm btn-success btn-custom" onClick={() => toggleComplete(task.id)}>
+            <button className="btn btn-success btn-sm" onClick={() => toggleComplete(task.id)}>
               {task.completed ? 'Undo' : 'Complete'}
             </button>
-            <button className="btn btn-sm btn-danger btn-custom" onClick={() => deleteTask(task.id)}>
+            <button className="btn btn-danger btn-sm" onClick={() => deleteTask(task.id)}>
               Delete
             </button>
           </>
